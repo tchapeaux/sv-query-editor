@@ -1,0 +1,4 @@
+{
+  "Adisseo": "Marvel OR (\"Iron\" -(atom OR curtain OR metallurgy OR \"fist of steel\" OR @Metalhead)) OR (\"Captain America\" (shield OR patriot)) OR Hulk OR #Spiderman OR \"Thor Love and Thunder\"",
+  "simple": "(a or (b or \"saper vadere\")) or d"
+}
