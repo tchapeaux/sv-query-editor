@@ -5,14 +5,14 @@ import Editor from "./components/Editor.vue";
 import Vizualizer from "./components/Vizualizer.vue";
 
 let isCopied = reactive({ value: false });
-let query = reactive({ value: queries_example.Adisseo });
+let query = reactive({ value: queries_example.Marvel });
 
 function onQueryChange(newQuery: string) {
   query.value = newQuery;
 }
 
 function onCopyQuery() {
-  let cleanedQuery = query.value.replace(/ or /gi, " OR ");
+  let cleanedQuery = query.value.replace(/ or /gi, " OR ").replace(/\s+/g, " ");
 
   navigator.clipboard.writeText(cleanedQuery);
   isCopied.value = true;

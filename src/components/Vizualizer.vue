@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { computed } from "vue";
 
+import queryFormatter from "../utils/queryFormatter";
+
 const props = defineProps({
   query: {
     type: String,
@@ -8,36 +10,7 @@ const props = defineProps({
   },
 });
 
-const formattedQuery = computed(() => {
-  let formatted = "";
-  let currentIndent = 0;
-
-  const query = props.query.replace(/ OR /g, "\nOR\n");
-
-  for (let charIdx = 0; charIdx < query.length; charIdx++) {
-    const char = query[charIdx];
-    if (char === "(") {
-      formatted += "(\n";
-      currentIndent += 1;
-      formatted += "  ".repeat(currentIndent);
-    } else if (char === ")") {
-      currentIndent -= 1;
-      formatted += "\n" + "  ".repeat(currentIndent) + ")\n";
-    } else if (char == "O" && query[charIdx + 1] == "R") {
-      formatted += "  ".repeat(currentIndent) + "OR ";
-      charIdx += 2;
-    } else if (char === "-") {
-      formatted += "\n" + "  ".repeat(currentIndent) + "-";
-    } else {
-      formatted += char;
-    }
-  }
-
-  // fix double line returns
-  formatted = formatted.replace(/\n\n/g, "\n");
-
-  return formatted;
-});
+const formattedQuery = computed(() => queryFormatter(props.query));
 </script>
 
 <template>

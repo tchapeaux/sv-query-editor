@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
+
 import svQueryLang from "../utils/svQueryLang";
 
 const props = defineProps({
@@ -64,7 +65,6 @@ onMounted(() => {
   editorInstance?.getModel()?.onDidChangeContent(() => {
     const newValue = editorInstance.getValue();
     props.onQueryChange(newValue);
-    console.log(monaco.editor.tokenize(newValue, "svQuery"));
   });
 });
 </script>
