@@ -7,7 +7,7 @@ export default {
   defaultToken: "invalid",
   tokenPostfix: ".svQuery",
 
-  keywords: ["or", "OR", "-"],
+  keywords: ["or", "OR"],
 
   brackets: [
     { open: "{", close: "}", token: "delimiter.curly" },
@@ -21,11 +21,14 @@ export default {
       { include: "@numbers" },
       { include: "@strings" },
 
-      [/[,:;]/, "delimiter"],
       [/[{}\[\]()]/, "@brackets"],
 
+      [/-/, "custom-negation"],
+      [/@[0-9a-zA-ZÀ-ÖØ-öø-ÿ]+/, "custom-twitter-user"],
+      [/#[0-9a-zA-ZÀ-ÖØ-öø-ÿ]+/, "custom-hashtag"],
+
       [
-        /[0-9a-zA-ZÀ-ÖØ-öø-ÿ@#-][0-9a-zA-ZÀ-ÖØ-öø-ÿ]*/,
+        /[0-9a-zA-ZÀ-ÖØ-öø-ÿ]*/,
         {
           cases: {
             "@keywords": "keyword",

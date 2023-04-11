@@ -19,10 +19,37 @@ const editorDom = ref(null);
 
 // Use the onMounted hook to execute code once the component is mounted
 onMounted(() => {
+  // define custom language for SV Queries
+  monaco.languages.register({ id: "svQuery" });
+  monaco.languages.setMonarchTokensProvider("svQuery", svQueryLang);
+
+  monaco.languages.setLanguageConfiguration("svQuery", {
+    brackets: [["(", ")"]],
+  });
+
+  // Define a new theme that contains only rules that match our language
+  monaco.editor.defineTheme("svQueryTheme", {
+    base: "vs-dark",
+    inherit: true,
+    rules: [
+      { token: "keyword", foreground: "#55aa55" },
+      {
+        token: "custom-negation",
+        foreground: "#ff0000",
+      },
+      { token: "custom-twitter-user", foreground: "#1DA1F2" },
+      { token: "custom-hashtag", foreground: "#F26E1D" },
+    ],
+
+    colors: {
+      "editor.foreground": "#cccccc",
+    },
+  });
+
   const editorInstance = monaco.editor.create(editorDom.value, {
     language: "svQuery",
     value: props.query,
-    theme: "vs-dark",
+    theme: "svQueryTheme",
     wordWrap: "on",
     lineNumbers: "off",
     minimap: {
@@ -36,14 +63,6 @@ onMounted(() => {
     const newValue = editorInstance.getValue();
     props.onQueryChange(newValue);
     console.log(monaco.editor.tokenize(newValue, "svQuery"));
-  });
-
-  // define custom language for SV Queries
-  monaco.languages.register({ id: "svQuery" });
-  monaco.languages.setMonarchTokensProvider("svQuery", svQueryLang);
-
-  monaco.languages.setLanguageConfiguration("svQuery", {
-    brackets: [["(", ")"]],
   });
 });
 </script>
