@@ -29,11 +29,10 @@ onMounted(() => {
       enabled: false,
     },
     scrollBeyondLastLine: false,
-    "bracketPairColorization.enabled": true,
   });
 
   // callback when changing the query
-  editorInstance.getModel().onDidChangeContent(() => {
+  editorInstance?.getModel()?.onDidChangeContent(() => {
     const newValue = editorInstance.getValue();
     props.onQueryChange(newValue);
     console.log(monaco.editor.tokenize(newValue, "svQuery"));
@@ -42,6 +41,10 @@ onMounted(() => {
   // define custom language for SV Queries
   monaco.languages.register({ id: "svQuery" });
   monaco.languages.setMonarchTokensProvider("svQuery", svQueryLang);
+
+  monaco.languages.setLanguageConfiguration("svQuery", {
+    brackets: [["(", ")"]],
+  });
 });
 </script>
 
