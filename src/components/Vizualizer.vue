@@ -24,9 +24,10 @@ const formattedQuery = computed(() => {
       currentIndent -= 1;
       formatted += "\n" + "  ".repeat(currentIndent) + ")\n";
     } else if (char == "O" && query[charIdx + 1] == "R") {
-      formatted +=
-        "  ".repeat(currentIndent) + "OR\n" + "  ".repeat(currentIndent);
+      formatted += "  ".repeat(currentIndent) + "OR ";
       charIdx += 2;
+    } else if (char === "-") {
+      formatted += "\n" + "  ".repeat(currentIndent) + "-";
     } else {
       formatted += char;
     }
