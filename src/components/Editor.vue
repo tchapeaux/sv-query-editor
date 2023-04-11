@@ -39,6 +39,7 @@ onMounted(() => {
       },
       { token: "custom-twitter-user", foreground: "#1DA1F2" },
       { token: "custom-hashtag", foreground: "#F26E1D" },
+      { token: "custom-label", foreground: "#AAAAFF" },
     ],
 
     colors: {
@@ -74,7 +75,7 @@ onMounted(() => {
 <style scoped>
 .editorDiv {
   width: 100%;
-  height: 200px;
+  height: 400px;
   margin-bottom: 16px;
 }
 </style>
