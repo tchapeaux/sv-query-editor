@@ -27,12 +27,38 @@ function onCopyQuery() {
   setTimeout(() => (isCopied.value = false), 2000);
 }
 
-function onFormat() {
+function onFormatAsTree() {
   if (editorInstance.value) {
+    monaco.languages.registerDocumentFormattingEditProvider(
+      "svQuery",
+      getFormatter(formatAsTreeView)
+    );
+
     editorInstance.value.trigger(
       "editor",
       "editor.action.formatDocument",
       null
+    );
+  }
+}
+
+function onFormatAsLine() {
+  if (editorInstance.value) {
+    monaco.languages.registerDocumentFormattingEditProvider(
+      "svQuery",
+      getFormatter(formatAsSingleLine)
+    );
+
+    editorInstance.value.trigger(
+      "editor",
+      "editor.action.formatDocument",
+      null
+    );
+
+    // Re-enable tree formatting afterwards
+    monaco.languages.registerDocumentFormattingEditProvider(
+      "svQuery",
+      getFormatter(formatAsTreeView)
     );
   }
 }
@@ -66,11 +92,6 @@ monaco.editor.defineTheme("svQueryTheme", {
   },
 });
 
-monaco.languages.registerDocumentFormattingEditProvider(
-  "svQuery",
-  getFormatter(formatAsTreeView)
-);
-
 // Wait for the component to be mounted to create the instance
 onMounted(() => {
   editorInstance.value = monaco.editor.create(editorDom.value, {
@@ -99,7 +120,8 @@ onMounted(() => {
     <span v-if="isCopied.value">✔️ Copié !</span>
     <span v-else>Copier</span>
   </button>
-  <button @click="onFormat">Formatter</button>
+  <button @click="onFormatAsTree">Formatter en arbre</button>
+  <button @click="onFormatAsLine">Formatter en ligne</button>
 </template>
 
 <style scoped>
