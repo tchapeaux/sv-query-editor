@@ -24,6 +24,7 @@ export default {
       [/[{}\[\]()]/, "@brackets"],
 
       [/-/, "custom-negation"],
+      ["or", "custom-negation"],
       [/\*/, "custom-wildcard"],
       [/@[0-9a-zA-ZÀ-ÖØ-öø-ÿ]+/, "custom-twitter-user"],
       [/#[0-9a-zA-ZÀ-ÖØ-öø-ÿ]+/, "custom-hashtag"],
