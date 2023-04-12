@@ -147,5 +147,7 @@ nav {
   width: 100%;
   height: 400px;
   margin-bottom: 16px;
+
+  border: 5px solid white;
 }
 </style>

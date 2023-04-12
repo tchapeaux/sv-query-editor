@@ -1,19 +1,20 @@
 export default {
-  base: "vs-dark",
+  base: "vs",
   inherit: true,
   rules: [
-    { token: "keyword", foreground: "#55aa55" },
+    { token: "keyword", foreground: "#B510FB" },
+    { token: "string", foreground: "#0030fa" },
     {
       token: "custom-negation",
-      foreground: "#ff0000",
+      foreground: "#d60001",
     },
-    { token: "custom-wildcard", foreground: "#ffd700" },
-    { token: "custom-twitter-user", foreground: "#1DA1F2" },
-    { token: "custom-hashtag", foreground: "#F26E1D" },
-    { token: "custom-label", foreground: "#AAAAFF" },
+    { token: "custom-wildcard", foreground: "#158656" },
+    { token: "custom-twitter-user", foreground: "#00c4ff" },
+    { token: "custom-hashtag", foreground: "#ff761a" },
+    { token: "custom-label", foreground: "#6201fb" },
   ],
 
   colors: {
-    "editor.foreground": "#cccccc",
+    "editor.foreground": "#333333",
   },
 };
