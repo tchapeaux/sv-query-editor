@@ -11,8 +11,12 @@ import {
   getFormatter,
 } from "../utils/queryFormatter";
 
+const urlParams = new URLSearchParams(window.location.search);
+
 const isCopied = reactive({ value: false });
-const query = reactive({ value: queries_example.Marvel });
+const query = reactive({
+  value: urlParams.get("query") || queries_example.Marvel,
+});
 
 const editorDom: Ref<HTMLElement> = ref(null);
 const editorInstance: ShallowRef<monaco.editor.IStandaloneCodeEditor> =
