@@ -4,6 +4,7 @@ import type { Ref, ShallowRef } from "vue";
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 
 import svQueryLang from "../utils/svQueryLang";
+import svQueryTheme from "../utils/svQueryTheme";
 import queries_example from "../utils/queries_examples.json";
 import {
   formatAsTreeView,
@@ -76,25 +77,7 @@ monaco.languages.setLanguageConfiguration("svQuery", {
 });
 
 // Define a new theme that contains only rules that match our language
-monaco.editor.defineTheme("svQueryTheme", {
-  base: "vs-dark",
-  inherit: true,
-  rules: [
-    { token: "keyword", foreground: "#55aa55" },
-    {
-      token: "custom-negation",
-      foreground: "#ff0000",
-    },
-    { token: "custom-wildcard", foreground: "#ffd700" },
-    { token: "custom-twitter-user", foreground: "#1DA1F2" },
-    { token: "custom-hashtag", foreground: "#F26E1D" },
-    { token: "custom-label", foreground: "#AAAAFF" },
-  ],
-
-  colors: {
-    "editor.foreground": "#cccccc",
-  },
-});
+monaco.editor.defineTheme("svQueryTheme", svQueryTheme);
 
 // Wait for the component to be mounted to create the instance
 onMounted(() => {
