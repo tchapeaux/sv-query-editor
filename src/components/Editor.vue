@@ -106,6 +106,7 @@ onMounted(() => {
     theme: "svQueryTheme",
     wordWrap: "on",
     lineNumbers: "on",
+    maxTokenizationLineLength: 50000,
     minimap: {
       enabled: false,
     },
