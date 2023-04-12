@@ -14,10 +14,12 @@ import {
 
 const urlParams = new URLSearchParams(window.location.search);
 
-const isCopied = reactive({ value: false });
 const query = reactive({
   value: urlParams.get("query") || queries_example.Marvel,
 });
+
+const isQueryCopied = reactive({ value: false });
+const isLinkCopied = reactive({ value: false });
 
 const editorDom: Ref<HTMLElement> = ref(null);
 const editorInstance: ShallowRef<monaco.editor.IStandaloneCodeEditor> =
@@ -27,9 +29,18 @@ function onCopyQuery() {
   let cleanedQuery = formatAsSingleLine(query.value.replace(/ or /gi, " OR "));
 
   navigator.clipboard.writeText(cleanedQuery);
-  isCopied.value = true;
+  isQueryCopied.value = true;
 
-  setTimeout(() => (isCopied.value = false), 2000);
+  setTimeout(() => (isQueryCopied.value = false), 2000);
+}
+
+function onCopyShareLink() {
+  let shareUrl = window.location.origin + "?query=" + encodeURI(query.value);
+
+  navigator.clipboard.writeText(shareUrl);
+  isLinkCopied.value = true;
+
+  setTimeout(() => (isLinkCopied.value = false), 2000);
 }
 
 function onFormatAsTree() {
@@ -103,15 +114,29 @@ onMounted(() => {
 
 <template>
   <div class="editorDiv" ref="editorDom"></div>
-  <button @click="onCopyQuery">
-    <span v-if="isCopied.value">✔️ Copié !</span>
-    <span v-else>Copier</span>
-  </button>
-  <button @click="onFormatAsTree">Formatter en arbre</button>
-  <button @click="onFormatAsLine">Formatter en ligne</button>
+  <nav>
+    <button @click="onFormatAsTree">Formatter en arbre</button>
+    <button @click="onFormatAsLine">Formatter en ligne</button>
+  </nav>
+  <nav>
+    <button @click="onCopyQuery">
+      <span v-if="isQueryCopied.value">✔️ Copié !</span>
+      <span v-else>Copier la Query</span>
+    </button>
+    <button @click="onCopyShareLink">
+      <span v-if="isLinkCopied.value">✔️ Copié !</span>
+      <span v-else>Copier un lien de partage</span>
+    </button>
+  </nav>
 </template>
 
 <style scoped>
+nav {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
 .editorDiv {
   width: 100%;
   height: 400px;
