@@ -103,7 +103,7 @@ onMounted(() => {
     value: query.value,
     theme: "svQueryTheme",
     wordWrap: "on",
-    lineNumbers: "off",
+    lineNumbers: "on",
     minimap: {
       enabled: false,
     },
