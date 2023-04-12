@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref, shallowRef, reactive } from "vue";
 import type { Ref, ShallowRef } from "vue";
+import LZString from "lz-string";
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 
 import svQueryLang from "../utils/svQueryLang";
@@ -15,7 +16,9 @@ import {
 const urlParams = new URLSearchParams(window.location.search);
 
 const query = reactive({
-  value: urlParams.get("query") || queries_example.Marvel,
+  value:
+    LZString.decompressFromEncodedURIComponent(urlParams.get("query") || "") ||
+    queries_example.Marvel,
 });
 
 const isQueryCopied = reactive({ value: false });
@@ -35,7 +38,10 @@ function onCopyQuery() {
 }
 
 function onCopyShareLink() {
-  let shareUrl = window.location.origin + "?query=" + encodeURI(query.value);
+  let shareUrl =
+    window.location.origin +
+    "?query=" +
+    LZString.compressToEncodedURIComponent(query.value);
 
   navigator.clipboard.writeText(shareUrl);
   isLinkCopied.value = true;
