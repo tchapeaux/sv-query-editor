@@ -92,8 +92,8 @@ onMounted(() => {
 <template>
   <div class="editorDiv" ref="editorDom"></div>
   <button @click="onCopyQuery">
-    <span v-if="isCopied.value">✔️ Copied</span>
-    <span v-else>Copy</span>
+    <span v-if="isCopied.value">✔️ Copié !</span>
+    <span v-else>Copier</span>
   </button>
   <button @click="onFormat">Formatter</button>
 </template>

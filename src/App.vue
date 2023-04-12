@@ -3,9 +3,8 @@ import Editor from "./components/Editor.vue";
 </script>
 
 <template>
-  <h1>SV Query Editor</h1>
-  <h2>Editor</h2>
-  <p>Paste your query in the editor below</p>
+  <h1>SV Éditeur de Query</h1>
+  <p>Collez votre query ci-dessous</p>
   <Editor />
 </template>
 
