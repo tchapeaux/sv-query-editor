@@ -39,3 +39,17 @@ export function formatAsSingleLine(query) {
     .replace(/\(\s+/g, "(")
     .replace(/\s+\)/g, ")");
 }
+
+export function getFormatter(formatterFunction) {
+  return {
+    provideDocumentFormattingEdits(model) {
+      var formatted = formatterFunction(model.getValue());
+      return [
+        {
+          range: model.getFullModelRange(),
+          text: formatted,
+        },
+      ];
+    },
+  };
+}
