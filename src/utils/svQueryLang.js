@@ -9,11 +9,7 @@ export default {
 
   keywords: ["OR"],
 
-  brackets: [
-    { open: "{", close: "}", token: "delimiter.curly" },
-    { open: "[", close: "]", token: "delimiter.bracket" },
-    { open: "(", close: ")", token: "delimiter.parenthesis" },
-  ],
+  brackets: [{ open: "(", close: ")", token: "delimiter.parenthesis" }],
 
   tokenizer: {
     root: [
@@ -21,9 +17,9 @@ export default {
       { include: "@numbers" },
       { include: "@strings" },
 
-      [/[{}\[\]()]/, "@brackets"],
+      [/[()]/, "@brackets"],
 
-      [/-/, "custom-negation"],
+      [/[-\[\]\{\}]/, "custom-negation"],
       ["or", "custom-negation"],
       [/\*/, "custom-wildcard"],
       [/@[0-9a-zA-ZÀ-ÖØ-öø-ÿ]+/, "custom-twitter-user"],
@@ -31,7 +27,7 @@ export default {
       [/[a-zA-Z]+:/, "custom-label"],
 
       [
-        /[0-9a-zA-ZÀ-ÖØ-öø-ÿ]*/,
+        /[0-9a-zA-ZÀ-ÖØ-öø-ÿ_]*/,
         {
           cases: {
             "@keywords": "keyword",
