@@ -126,7 +126,7 @@ onMounted(() => {
   </nav>
   <nav>
     <button @click="onCopyQuery">
-      <span v-if="isQueryCopied.value">✔️ Copié !</span>
+      <span v-if="isQueryCopied.value">✔️ Copiée !</span>
       <span v-else>Copier la Query</span>
     </button>
     <button @click="onCopyShareLink">
