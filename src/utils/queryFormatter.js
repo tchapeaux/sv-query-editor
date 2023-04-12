@@ -3,8 +3,7 @@ export function formatAsTreeView(query) {
   let currentIndent = 0;
 
   // normalize query
-  query = query.replace(/\n/g, " ");
-  query = query.replace(/\s+/g, " ");
+  query = formatAsSingleLine(query);
 
   let isInString = false;
 
