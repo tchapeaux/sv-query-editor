@@ -33,6 +33,7 @@ function onCopyQuery() {
 
   navigator.clipboard.writeText(cleanedQuery);
   isQueryCopied.value = true;
+  isLinkCopied.value = false;
 
   setTimeout(() => (isQueryCopied.value = false), 2000);
 }
@@ -45,6 +46,7 @@ function onCopyShareLink() {
 
   navigator.clipboard.writeText(shareUrl);
   isLinkCopied.value = true;
+  isQueryCopied.value = false;
 
   setTimeout(() => (isLinkCopied.value = false), 2000);
 }
