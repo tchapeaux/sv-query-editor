@@ -3,7 +3,7 @@ import { onMounted, ref } from "vue";
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 
 import svQueryLang from "../utils/svQueryLang";
-import queryFormatter from "../utils/queryFormatter";
+import { formatAsTreeView } from "../utils/queryFormatter";
 
 const props = defineProps({
   query: {
@@ -52,7 +52,7 @@ onMounted(() => {
 
   monaco.languages.registerDocumentFormattingEditProvider("svQuery", {
     provideDocumentFormattingEdits(model, options) {
-      var formatted = queryFormatter(model.getValue());
+      var formatted = formatAsTreeView(model.getValue());
       return [
         {
           range: model.getFullModelRange(),

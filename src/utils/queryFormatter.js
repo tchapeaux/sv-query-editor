@@ -1,4 +1,4 @@
-export default function formatQuery(query) {
+export function formatAsTreeView(query) {
   let formatted = "";
   let currentIndent = 0;
 
@@ -31,4 +31,11 @@ export default function formatQuery(query) {
   formatted = formatted.replace(/\n+/g, "\n");
 
   return formatted;
+}
+
+export function formatAsSingleLine(query) {
+  return query
+    .replace(/\s+/g, " ")
+    .replace(/\(\s+/g, "(")
+    .replace(/\s+\)/, ")");
 }

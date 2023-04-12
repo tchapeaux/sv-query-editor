@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import { reactive } from "vue";
-import queries_example from "./utils/queries_examples.json";
+
 import Editor from "./components/Editor.vue";
 import Vizualizer from "./components/Vizualizer.vue";
+
+import queries_example from "./utils/queries_examples.json";
+import { formatAsSingleLine } from "./utils/queryFormatter.js";
 
 let isCopied = reactive({ value: false });
 let query = reactive({ value: queries_example.Marvel });
@@ -12,7 +15,7 @@ function onQueryChange(newQuery: string) {
 }
 
 function onCopyQuery() {
-  let cleanedQuery = query.value.replace(/ or /gi, " OR ").replace(/\s+/g, " ");
+  let cleanedQuery = formatAsSingleLine(query.value.replace(/ or /gi, " OR "));
 
   navigator.clipboard.writeText(cleanedQuery);
   isCopied.value = true;

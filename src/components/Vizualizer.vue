@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 
-import queryFormatter from "../utils/queryFormatter";
+import { formatAsTreeView } from "../utils/queryFormatter";
 
 const props = defineProps({
   query: {
@@ -10,7 +10,7 @@ const props = defineProps({
   },
 });
 
-const formattedQuery = computed(() => queryFormatter(props.query));
+const formattedQuery = computed(() => formatAsTreeView(props.query));
 </script>
 
 <template>
