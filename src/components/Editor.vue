@@ -1,25 +1,32 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, ref, shallowRef, reactive } from "vue";
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 
 import svQueryLang from "../utils/svQueryLang";
-import { formatAsTreeView } from "../utils/queryFormatter";
+import queries_example from "../utils/queries_examples.json";
+import { formatAsTreeView, formatAsSingleLine } from "../utils/queryFormatter";
 
-const props = defineProps({
-  query: {
-    type: String,
-    default: "",
-  },
-  onQueryChange: {
-    type: Function,
-    default: () => null,
-  },
-});
+const isCopied = reactive({ value: false });
+const query = reactive({ value: queries_example.Marvel });
 
-// Create a ref to hold the DOM node
 const editorDom = ref(null);
+const editorInstance = shallowRef(null);
 
-// Use the onMounted hook to execute code once the component is mounted
+function onCopyQuery() {
+  let cleanedQuery = formatAsSingleLine(query.value.replace(/ or /gi, " OR "));
+
+  navigator.clipboard.writeText(cleanedQuery);
+  isCopied.value = true;
+
+  setTimeout(() => (isCopied.value = false), 2000);
+}
+
+function onFormat() {
+  // mannually trigger document formatting by:
+  editorInstance.value.trigger("editor", "editor.action.formatDocument");
+}
+
+// Wait for the component to be mounted to create the instance
 onMounted(() => {
   // define custom language for SV Queries
   monaco.languages.register({ id: "svQuery" });
@@ -62,9 +69,9 @@ onMounted(() => {
     },
   });
 
-  const editorInstance = monaco.editor.create(editorDom.value, {
+  editorInstance.value = monaco.editor.create(editorDom.value, {
     language: "svQuery",
-    value: props.query,
+    value: query.value,
     theme: "svQueryTheme",
     wordWrap: "on",
     lineNumbers: "off",
@@ -75,15 +82,20 @@ onMounted(() => {
   });
 
   // callback when changing the query
-  editorInstance?.getModel()?.onDidChangeContent(() => {
-    const newValue = editorInstance.getValue();
-    props.onQueryChange(newValue);
+  editorInstance.value?.getModel()?.onDidChangeContent(() => {
+    const newValue = editorInstance.value.getValue();
+    query.value = newValue;
   });
 });
 </script>
 
 <template>
   <div class="editorDiv" ref="editorDom"></div>
+  <button @click="onCopyQuery">
+    <span v-if="isCopied.value">✔️ Copied</span>
+    <span v-else>Copy</span>
+  </button>
+  <button @click="onFormat">Formatter</button>
 </template>
 
 <style scoped>

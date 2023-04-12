@@ -37,5 +37,5 @@ export function formatAsSingleLine(query) {
   return query
     .replace(/\s+/g, " ")
     .replace(/\(\s+/g, "(")
-    .replace(/\s+\)/, ")");
+    .replace(/\s+\)/g, ")");
 }
