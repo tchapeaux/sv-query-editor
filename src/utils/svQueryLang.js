@@ -19,8 +19,12 @@ export default {
 
       [/[()]/, "@brackets"],
 
+      [/or(?= )/, "invalid"], // use lookahead to avoid catching words prefixed by or*
+      [/oR(?= )/, "invalid"], // use lookahead to avoid catching words prefixed by or*
+      [/Or(?= )/, "invalid"], // use lookahead to avoid catching words prefixed by or*
+
       [/[-\[\]\{\}]/, "custom-negation"],
-      [/or(?= )/, "custom-negation"], // use lookahead to avoid catching words prefixed by or*
+
       [/\*/, "custom-wildcard"],
       [/@[0-9a-zA-ZÀ-ÖØ-öø-ÿ]+/, "custom-twitter-user"],
       [/#[0-9a-zA-ZÀ-ÖØ-öø-ÿ]+/, "custom-hashtag"],
