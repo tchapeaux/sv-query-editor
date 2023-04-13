@@ -1,6 +1,7 @@
 export function formatAsTreeView(query) {
   let formatted = "";
   let currentIndent = 0;
+  const INDENT = "  ";
 
   // normalize query
   query = formatAsSingleLine(query);
@@ -12,12 +13,12 @@ export function formatAsTreeView(query) {
     if (char === "(" && !isInString) {
       formatted += "(\n";
       currentIndent += 1;
-      formatted += "  ".repeat(currentIndent);
+      formatted += INDENT.repeat(currentIndent);
     } else if (char === ")" && !isInString) {
       currentIndent -= 1;
-      formatted += "\n" + "  ".repeat(currentIndent) + ")";
+      formatted += "\n" + INDENT.repeat(currentIndent) + ")";
     } else if (char === "-" && !isInString) {
-      formatted += "\n" + "  ".repeat(currentIndent) + "-";
+      formatted += "\n" + INDENT.repeat(currentIndent) + "-";
     } else if (char === '"') {
       isInString = !isInString;
       formatted += char;

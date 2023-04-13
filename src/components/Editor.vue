@@ -107,6 +107,7 @@ onMounted(() => {
     wordWrap: "on",
     lineNumbers: "on",
     maxTokenizationLineLength: 50000,
+    tabSize: 2,
     minimap: {
       enabled: false,
     },
