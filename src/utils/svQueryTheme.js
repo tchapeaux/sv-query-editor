@@ -8,6 +8,11 @@ export default {
       token: "custom-negation",
       foreground: "#d60001",
     },
+    {
+      token: "invalid",
+      foreground: "#dd0000",
+      fontStyle: "bold",
+    },
     { token: "custom-wildcard", foreground: "#158656" },
     { token: "custom-twitter-user", foreground: "#00c4ff" },
     { token: "custom-hashtag", foreground: "#ff761a" },
