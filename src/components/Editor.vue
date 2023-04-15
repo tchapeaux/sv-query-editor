@@ -6,6 +6,7 @@ import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 
 import svQueryLang from "../utils/svQueryLang";
 import svQueryTheme from "../utils/svQueryTheme";
+import validate from "../utils/svQueryValidate";
 import queries_example from "../utils/queries_examples.json";
 import {
   formatAsTreeView,
@@ -114,10 +115,14 @@ onMounted(() => {
     scrollBeyondLastLine: false,
   });
 
+  validate(editorInstance.value.getModel());
+
   // callback when changing the query
-  editorInstance.value?.getModel()?.onDidChangeContent(() => {
+  editorInstance.value.getModel()?.onDidChangeContent(() => {
     const newValue = editorInstance.value.getValue();
     query.value = newValue;
+
+    validate(editorInstance.value.getModel());
   });
 });
 </script>
