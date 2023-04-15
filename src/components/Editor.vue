@@ -91,6 +91,21 @@ function onFormatAsLine() {
   }
 }
 
+function onGoToFirstError() {
+  if (editorInstance.value) {
+    editorInstance.value.trigger("editor", "editor.action.marker.next", null);
+  }
+}
+
+function checkForErrors() {
+  if (editorInstance.value) {
+    validate(editorInstance.value.getModel());
+
+    const markers = monaco.editor.getModelMarkers({ owner: "owner" });
+    state.containsError = markers.length > 0;
+  }
+}
+
 // define custom language for SV Queries
 monaco.languages.register({ id: "svQuery" });
 monaco.languages.setMonarchTokensProvider("svQuery", svQueryLang);
@@ -118,23 +133,29 @@ onMounted(() => {
     scrollBeyondLastLine: false,
   });
 
-  validate(editorInstance.value.getModel());
+  checkForErrors();
 
   // callback when changing the query
   editorInstance.value.getModel()?.onDidChangeContent(() => {
     const newValue = editorInstance.value.getValue();
     query.value = newValue;
 
-    validate(editorInstance.value.getModel());
+    checkForErrors();
   });
 });
 </script>
 
 <template>
-  <div class="editorDiv" ref="editorDom"></div>
+  <div
+    :class="{ editorDiv: true, hasError: state.containsError }"
+    ref="editorDom"
+  ></div>
   <nav>
     <button @click="onFormatAsTree">Formatter en arbre</button>
     <button @click="onFormatAsLine">Formatter en ligne</button>
+    <button v-if="state.containsError" @click="onGoToFirstError">
+      🚨 See next error
+    </button>
   </nav>
   <nav>
     <button @click="onCopyQuery">
@@ -160,6 +181,10 @@ nav {
   height: 400px;
   margin-bottom: 16px;
 
-  border: 5px solid white;
+  border: 3px solid white;
+}
+
+.editorDiv.hasError {
+  border: 3px solid crimson;
 }
 </style>
