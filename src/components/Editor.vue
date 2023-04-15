@@ -22,8 +22,11 @@ const query = reactive({
     queries_example.Marvel,
 });
 
-const isQueryCopied = reactive({ value: false });
-const isLinkCopied = reactive({ value: false });
+const state = reactive({
+  isQueryCopied: false,
+  isLinkCopied: false,
+  containsError: false,
+});
 
 const editorDom: Ref<HTMLElement> = ref(null);
 const editorInstance: ShallowRef<monaco.editor.IStandaloneCodeEditor> =
@@ -33,10 +36,10 @@ function onCopyQuery() {
   let cleanedQuery = formatAsSingleLine(query.value.replace(/ or /gi, " OR "));
 
   navigator.clipboard.writeText(cleanedQuery);
-  isQueryCopied.value = true;
-  isLinkCopied.value = false;
+  state.isQueryCopied = true;
+  state.isLinkCopied = false;
 
-  setTimeout(() => (isQueryCopied.value = false), 2000);
+  setTimeout(() => (state.isQueryCopied = false), 2000);
 }
 
 function onCopyShareLink() {
@@ -46,10 +49,10 @@ function onCopyShareLink() {
     LZString.compressToEncodedURIComponent(query.value);
 
   navigator.clipboard.writeText(shareUrl);
-  isLinkCopied.value = true;
-  isQueryCopied.value = false;
+  state.isLinkCopied = true;
+  state.isQueryCopied = false;
 
-  setTimeout(() => (isLinkCopied.value = false), 2000);
+  setTimeout(() => (state.isLinkCopied = false), 2000);
 }
 
 function onFormatAsTree() {
@@ -135,11 +138,11 @@ onMounted(() => {
   </nav>
   <nav>
     <button @click="onCopyQuery">
-      <span v-if="isQueryCopied.value">✔️ Copiée !</span>
+      <span v-if="state.isQueryCopied">✔️ Copiée !</span>
       <span v-else>Copier la Query</span>
     </button>
     <button @click="onCopyShareLink">
-      <span v-if="isLinkCopied.value">✔️ Copié !</span>
+      <span v-if="state.isLinkCopied">✔️ Copié !</span>
       <span v-else>Copier un lien de partage</span>
     </button>
   </nav>
