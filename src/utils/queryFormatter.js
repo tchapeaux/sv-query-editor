@@ -30,7 +30,7 @@ export function formatAsTreeView(query) {
   }
 
   // fix double line returns
-  formatted = formatted.replace(/\n+/g, "\n");
+  formatted = formatted.replace(/\n\s*\n/g, "\n");
 
   return formatted;
 }
