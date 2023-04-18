@@ -1,5 +1,3 @@
-import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
-
 export default function validate(model) {
   const markers = [];
 
@@ -32,7 +30,6 @@ export default function validate(model) {
           } else {
             markers.push({
               message: `Unmatched closed parenthesis`,
-              severity: monaco.MarkerSeverity.Error,
               startLineNumber: lineIdx,
               startColumn: charIdx + 1,
               endLineNumber: lineIdx,
@@ -42,7 +39,6 @@ export default function validate(model) {
         } else if (orGroup.match(/\s[oip]r\s/i) && orGroup !== " OR ") {
           markers.push({
             message: "Mistyped 'OR'",
-            severity: monaco.MarkerSeverity.Error,
             startLineNumber: lineIdx,
             startColumn: charIdx + 1,
             endLineNumber: lineIdx,
@@ -57,7 +53,6 @@ export default function validate(model) {
   parenthesisStack.forEach(({ line, col }) =>
     markers.push({
       message: "Unmatched open parenthesis",
-      severity: monaco.MarkerSeverity.Error,
       startLineNumber: line,
       startColumn: col + 1,
       endLineNumber: line,
@@ -65,5 +60,5 @@ export default function validate(model) {
     })
   );
 
-  monaco.editor.setModelMarkers(model, "owner", markers);
+  return markers;
 }

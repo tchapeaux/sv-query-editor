@@ -99,10 +99,18 @@ function onGoToFirstError() {
 
 function checkForErrors() {
   if (editorInstance.value) {
-    validate(editorInstance.value.getModel());
+    const markers = validate(editorInstance.value.getModel());
 
-    const markers = monaco.editor.getModelMarkers({ owner: "owner" });
     state.containsError = markers.length > 0;
+
+    monaco.editor.setModelMarkers(
+      editorInstance.value.getModel(),
+      "owner",
+      markers.map((m) => ({
+        ...m,
+        severity: monaco.MarkerSeverity.Error,
+      }))
+    );
   }
 }
 
