@@ -57,3 +57,8 @@ button:focus-visible {
   margin: 0 auto;
   padding: 2rem;
 }
+
+/* Override some monaco-editor styles */
+.monaco-editor .filename {
+  display: none; /* not relevant in our case, so removed to avoid distraction */
+}
