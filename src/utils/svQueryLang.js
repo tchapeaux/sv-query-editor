@@ -19,9 +19,13 @@ export default {
 
       [/[()]/, "@brackets"],
 
-      [/or(?= )/, "invalid"], // use lookahead to avoid catching words prefixed by or*
-      [/oR(?= )/, "invalid"], // use lookahead to avoid catching words prefixed by or*
-      [/Or(?= )/, "invalid"], // use lookahead to avoid catching words prefixed by or*
+      // Invalid typos of "or"
+      // use lookahead to avoid catching words prefixed by or*
+      [/or(?= )/, "invalid"],
+      [/oR(?= )/, "invalid"],
+      [/Or(?= )/, "invalid"],
+      [/[pP][rR](?= )/i, "invalid"],
+      [/[iI][rR](?= )/i, "invalid"],
 
       [/[-\[\]\{\}]/, "custom-negation"],
 

@@ -19,6 +19,8 @@ export default function validate(model) {
 
     for (let charIdx = 0; charIdx < line.length; charIdx++) {
       const char = line[charIdx];
+      const orGroup = line.substr(charIdx - 1, 4); // substring used to detect mispelled "OR"s
+
       if (char === '"') {
         isInStringFlag = !isInStringFlag;
       } else if (!isInStringFlag) {
@@ -37,11 +39,9 @@ export default function validate(model) {
               endColumn: charIdx + 2,
             });
           }
-        } else if (
-          [" or ", " oR ", " Or "].includes(line.substr(charIdx - 1, 4))
-        ) {
+        } else if (orGroup.match(/\s[oip]r\s/i) && orGroup !== " OR ") {
           markers.push({
-            message: `Mistyped 'OR'`,
+            message: "Mistyped 'OR'",
             severity: monaco.MarkerSeverity.Error,
             startLineNumber: lineIdx,
             startColumn: charIdx + 1,
