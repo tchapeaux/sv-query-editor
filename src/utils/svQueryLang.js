@@ -27,7 +27,7 @@ export default {
       [/[pP][rR](?= )/i, "invalid"],
       [/[iI][rR](?= )/i, "invalid"],
 
-      [/[-\[\]\{\}]/, "custom-negation"],
+      [/[-]/, "custom-negation"],
 
       [/\*/, "custom-wildcard"],
       [/@[0-9a-zA-ZÀ-ÖØ-öø-ÿ]+/, "custom-twitter-user"],
@@ -54,7 +54,7 @@ export default {
     // Recognize hex, negatives, decimals, imaginaries, longs, and scientific notation
     numbers: [
       [/-?0x([abcdef]|[ABCDEF]|\d)+[lL]?/, "number.hex"],
-      [/-?(\d*\.)?\d+([eE][+\-]?\d+)?[jJ]?[lL]?/, "number"],
+      [/-?(\d*\.)?\d+([eE][+-]?\d+)?[jJ]?[lL]?/, "number"],
     ],
 
     // Recognize strings, including those broken across lines with \ (but not without)
