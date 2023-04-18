@@ -33,6 +33,8 @@ describe("Validate query", () => {
     expect(checkHasMarker(" pr ", 1, 2)).toBeTruthy();
     expect(checkHasMarker(" IR ", 1, 2)).toBeTruthy();
     expect(checkHasMarker(" ir ", 1, 2)).toBeTruthy();
+    expect(checkHasMarker(" ro ", 1, 2)).toBeTruthy();
+    expect(checkHasMarker(" RO ", 1, 2)).toBeTruthy();
   });
 
   it("Valid queries", () => {

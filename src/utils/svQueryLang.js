@@ -26,6 +26,7 @@ export default {
       [/Or(?= )/, "invalid"],
       [/[pP][rR](?= )/i, "invalid"],
       [/[iI][rR](?= )/i, "invalid"],
+      [/[rR][oO](?= )/i, "invalid"],
 
       [/[-]/, "custom-negation"],
 

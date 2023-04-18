@@ -29,14 +29,16 @@ export default function validate(query) {
               endColumn: charIdx + 2,
             });
           }
-        } else if (orGroup.match(/\s[oip]r\s/i) && orGroup !== " OR ") {
-          markers.push({
-            message: "Mistyped 'OR'",
-            startLineNumber: lineIdx + 1,
-            startColumn: charIdx + 1,
-            endLineNumber: lineIdx + 1,
-            endColumn: charIdx + 3,
-          });
+        } else if (orGroup !== " OR ") {
+          if (orGroup.match(/\s[oip]r\s/i) || orGroup.match(/\sro\s/i)) {
+            markers.push({
+              message: "Mistyped 'OR'",
+              startLineNumber: lineIdx + 1,
+              startColumn: charIdx + 1,
+              endLineNumber: lineIdx + 1,
+              endColumn: charIdx + 3,
+            });
+          }
         }
       }
     }
