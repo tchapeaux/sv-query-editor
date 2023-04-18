@@ -1,4 +1,4 @@
-export default function validate(model) {
+export default function validate(query) {
   const markers = [];
 
   // Count open and close parenthesis to make sure they match
@@ -6,15 +6,8 @@ export default function validate(model) {
   // Keep track of when we are in an exact match or not
   let isInStringFlag = false;
 
-  for (let lineIdx = 1; lineIdx < model.getLineCount() + 1; lineIdx++) {
-    const range = {
-      startLineNumber: lineIdx,
-      startColumn: 1,
-      endLineNumber: lineIdx,
-      endColumn: model.getLineLength(lineIdx) + 1,
-    };
-    let line = model.getValueInRange(range).trim();
-
+  const queryPerLines = query.split("\n");
+  queryPerLines.forEach((line, lineIdx) => {
     for (let charIdx = 0; charIdx < line.length; charIdx++) {
       const char = line[charIdx];
       const orGroup = line.substr(charIdx - 1, 4); // substring used to detect mispelled "OR"s
@@ -30,32 +23,32 @@ export default function validate(model) {
           } else {
             markers.push({
               message: `Unmatched closed parenthesis`,
-              startLineNumber: lineIdx,
+              startLineNumber: lineIdx + 1,
               startColumn: charIdx + 1,
-              endLineNumber: lineIdx,
+              endLineNumber: lineIdx + 1,
               endColumn: charIdx + 2,
             });
           }
         } else if (orGroup.match(/\s[oip]r\s/i) && orGroup !== " OR ") {
           markers.push({
             message: "Mistyped 'OR'",
-            startLineNumber: lineIdx,
+            startLineNumber: lineIdx + 1,
             startColumn: charIdx + 1,
-            endLineNumber: lineIdx,
+            endLineNumber: lineIdx + 1,
             endColumn: charIdx + 3,
           });
         }
       }
     }
-  }
+  });
 
   // Mark any remaining open parenthesis
   parenthesisStack.forEach(({ line, col }) =>
     markers.push({
       message: "Unmatched open parenthesis",
-      startLineNumber: line,
+      startLineNumber: line + 1,
       startColumn: col + 1,
-      endLineNumber: line,
+      endLineNumber: line + 1,
       endColumn: col + 2,
     })
   );

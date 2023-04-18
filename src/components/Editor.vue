@@ -99,7 +99,7 @@ function onGoToFirstError() {
 
 function checkForErrors() {
   if (editorInstance.value) {
-    const markers = validate(editorInstance.value.getModel());
+    const markers = validate(editorInstance.value.getValue());
 
     state.containsError = markers.length > 0;
 
