@@ -15,7 +15,9 @@ export function formatAsTreeView(query) {
       currentIndent += 1;
       formatted += INDENT.repeat(currentIndent);
     } else if (char === ")" && !isInString) {
-      currentIndent -= 1;
+      if (currentIndent > 0) {
+        currentIndent -= 1;
+      }
       formatted += "\n" + INDENT.repeat(currentIndent) + ")";
     } else if (char === "-" && !isInString) {
       formatted += "\n" + INDENT.repeat(currentIndent) + "-";
