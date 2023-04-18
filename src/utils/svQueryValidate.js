@@ -59,9 +59,9 @@ export default function validate(model) {
       message: "Unmatched open parenthesis",
       severity: monaco.MarkerSeverity.Error,
       startLineNumber: line,
-      startColumn: col,
+      startColumn: col + 1,
       endLineNumber: line,
-      endColumn: col + 1,
+      endColumn: col + 2,
     })
   );
 
