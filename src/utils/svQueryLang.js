@@ -33,7 +33,7 @@ export default {
       [/\*/, "custom-wildcard"],
       [/@[0-9a-zA-ZÀ-ÖØ-öø-ÿ]+/, "custom-twitter-user"],
       [/#[0-9a-zA-ZÀ-ÖØ-öø-ÿ]+/, "custom-hashtag"],
-      [/[a-zA-Z]+:/, "custom-label"],
+      [/[a-zA-Z_]+:/, "custom-label"],
 
       [
         /[0-9a-zA-ZÀ-ÖØ-öø-ÿ_]*/,
