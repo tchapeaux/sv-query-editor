@@ -47,7 +47,20 @@ describe("Validate query", () => {
 
   it("Check valid queries are validated", () => {
     checkIsValidated("(foo) OR (bar)");
-    checkIsValidated("aa OR bb -(cc OR dd) stakeholder:National");
+    checkIsValidated("aa OR bb -(cc OR dd) stake:National");
     checkIsValidated('"foo bar baz" @foobar #barfoo');
+  });
+
+  it("Check filter prefixes are validated", () => {
+    checkIsValidated("foo type:bar");
+    checkIsValidated("foo stake:bar");
+    checkIsValidated("foo author:bar");
+    checkIsValidated('foo author:"Foochester Barnaby"');
+    checkIsValidated("foo lvl:bar");
+    checkIsValidated("foo group:bar");
+
+    checkHasMarker("foo fake:bar", 1, 5);
+
+    checkIsValidated('foo "fake:bar" validated because in a string');
   });
 });

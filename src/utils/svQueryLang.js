@@ -1,8 +1,5 @@
-// Difficulty: "Moderate"
-// Python language definition.
-// Only trickiness is that we need to check strings before identifiers
-// since they have letter prefixes. We also treat ':' as an @open bracket
-// in order to get auto identation.
+import validFilters from "./validFilters";
+
 export default {
   defaultToken: "invalid",
   tokenPostfix: ".svQuery",
@@ -28,12 +25,19 @@ export default {
       [/[iI][rR](?= )/i, "invalid"],
       [/[rR][oO](?= )/i, "invalid"],
 
-      [/[-]/, "custom-negation"],
+      [/-/, "custom-negation"],
 
       [/\*/, "custom-wildcard"],
       [/@[0-9a-zA-ZÀ-ÖØ-öø-ÿ]+/, "custom-twitter-user"],
       [/#[0-9a-zA-ZÀ-ÖØ-öø-ÿ]+/, "custom-hashtag"],
-      [/[a-zA-Z_]+:/, "custom-label"],
+      // one entry per filter prefix
+      ...validFilters.map((filterPrefix) => [
+        new RegExp(`${filterPrefix}:`),
+        "custom-label",
+      ]),
+      // Mark filters with other prefixes as invalid
+      [/[a-zA-Z_]+:/, "invalid"],
+      [/[:]/, "invalid"],
 
       [
         /[0-9a-zA-ZÀ-ÖØ-öø-ÿ_]*/,
