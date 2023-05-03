@@ -25,7 +25,7 @@ export default function validate(query) {
             parenthesisStack.pop();
           } else {
             markers.push({
-              message: `Unmatched closed parenthesis`,
+              message: `Parenthèse fermée sans équivalent ouverte`,
               startLineNumber: lineIdx + 1,
               startColumn: charIdx + 1,
               endLineNumber: lineIdx + 1,
@@ -38,7 +38,7 @@ export default function validate(query) {
           const lastWord = lineWords[lineWords.length - 1];
           if (!validFilters.includes(lastWord)) {
             markers.push({
-              message: `Invalid filter prefix: ${lastWord}`,
+              message: `Préfixe de filtre invalide: ${lastWord}`,
               startLineNumber: lineIdx + 1,
               startColumn: charIdx - lastWord.length + 1,
               endLineNumber: lineIdx + 1,
@@ -48,7 +48,7 @@ export default function validate(query) {
         } else if (orGroup !== " OR ") {
           if (orGroup.match(/\s[oip]r\s/i) || orGroup.match(/\sro\s/i)) {
             markers.push({
-              message: "Mistyped 'OR'",
+              message: "Faute de frappe dans 'OR'",
               startLineNumber: lineIdx + 1,
               startColumn: charIdx + 1,
               endLineNumber: lineIdx + 1,
@@ -63,7 +63,7 @@ export default function validate(query) {
   // Mark any remaining open parenthesis
   parenthesisStack.forEach(({ line, col }) =>
     markers.push({
-      message: "Unmatched open parenthesis",
+      message: "Parenthèse ouverte sans équivalent fermée",
       startLineNumber: line + 1,
       startColumn: col + 1,
       endLineNumber: line + 1,
