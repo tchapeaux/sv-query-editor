@@ -17,7 +17,8 @@ function DFS(currentNode) {
 }
 
 function translateSvToLucene(query) {
-  return query.replace(" -", " NOT ");
+  // These are "quick fixes" to support some general typos or quirks present in SV data
+  return query.replace(/\)-\(/g, ") -(").replace(/ -/g, " NOT ");
 }
 
 function extractNodeLocation(ambigousNode) {
@@ -52,3 +53,7 @@ export function getFirstAmbigiousNode(query) {
 
   return null;
 }
+
+// const query = "foo OR bar lvl:National";
+// console.log(lucene.parse(query));
+// console.log(getFirstAmbigiousNode(query));
