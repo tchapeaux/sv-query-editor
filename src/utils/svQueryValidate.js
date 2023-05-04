@@ -1,3 +1,4 @@
+import { getFirstAmbigiousNode } from "./astParser";
 import validFilters from "./validFilters";
 
 export default function validate(query) {
@@ -70,6 +71,24 @@ export default function validate(query) {
       endColumn: col + 2,
     })
   );
+
+  // Find ambiguous nodes using the AST parser
+  const ambigousNode = getFirstAmbigiousNode(query);
+  if (ambigousNode) {
+    const line = queryPerLines[ambigousNode.start.line - 1];
+
+    const nbOfNegations = (
+      line.substr(0, ambigousNode.start.column).match(/is/g) || []
+    ).length;
+    markers.push({
+      message:
+        "Combinaison ambigue de OR et AND implicite - utilisez des parenthèses",
+      startLineNumber: ambigousNode.start.line,
+      startColumn: ambigousNode.start.column + 3 * nbOfNegations,
+      endLineNumber: ambigousNode.end.line,
+      endColumn: ambigousNode.end.column + 3 * nbOfNegations,
+    });
+  }
 
   return markers;
 }
