@@ -15,22 +15,32 @@ function checkAmbiguousNodeExists(
   expect(nodeLocation.end.column).toBe(endCol);
 }
 
-describe("Find ambiguous nodes in queries", () => {
-  it("Unambiguous queries are validated", () => {
+describe("Simple unambiguous queries", () => {
+  it("Sanity check", () => {
     expect(getFirstAmbigiousNode("foo OR bar")).toBeNull();
+  });
+  it("Simple parenthesis", () => {
     expect(getFirstAmbigiousNode("(foo OR bar) hello")).toBeNull();
     expect(getFirstAmbigiousNode("foo OR (bar hello)")).toBeNull();
+  });
+  it("Complete valid example", () => {
     expect(
       getFirstAmbigiousNode("foo* OR (bar hello) -(fudge shoot) lvl:up")
     ).toBeNull();
   });
+});
 
-  it("mismatched AND and OR", () => {
+describe("Mismatched AND and OR", () => {
+  it("Explicit AND", () => {
     checkAmbiguousNodeExists("foo OR bar AND hello", [1, 12], [1, 16]);
+  });
+  it("Implicit AND", () => {
     checkAmbiguousNodeExists("foo OR bar hello", [1, 12], [1, 12]);
+  });
+  it("OR within ANDs", () => {
     checkAmbiguousNodeExists("foo bar hello world OR xyz", [1, 21], [1, 24]);
-
-    // multi-line example
+  });
+  it("Multi-line", () => {
     checkAmbiguousNodeExists(
       `
 A OR (
@@ -39,5 +49,8 @@ A OR (
       [3, 15],
       [3, 15]
     );
+  });
+  it("Filters ambiguity is also detected", () => {
+    expect(getFirstAmbigiousNode("foo OR bar lvl:National")).not.toBeNull();
   });
 });
