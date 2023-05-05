@@ -78,15 +78,15 @@ export default function validate(query) {
     const line = queryPerLines[ambigousNode.start.line - 1];
 
     const nbOfNegations = (
-      line.substr(0, ambigousNode.start.column).match(/is/g) || []
+      line.substr(0, ambigousNode.start.column).match(/ -/g) || []
     ).length;
     markers.push({
       message:
         "Combinaison ambigue de OR et AND implicite - utilisez des parenthèses",
       startLineNumber: ambigousNode.start.line,
-      startColumn: ambigousNode.start.column + 3 * nbOfNegations,
+      startColumn: ambigousNode.start.column - 3 * nbOfNegations,
       endLineNumber: ambigousNode.end.line,
-      endColumn: ambigousNode.end.column + 3 * nbOfNegations,
+      endColumn: ambigousNode.end.column - 3 * nbOfNegations,
     });
   }
 
