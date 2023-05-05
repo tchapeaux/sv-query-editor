@@ -1,4 +1,5 @@
 {
-  "Marvel": "Marvel OR (\"Iron\" -(atom* OR curtain OR metallurgy OR \"fist of steel\" OR @Metalhead)) OR (\"Captain America\" (shield OR patriot)) OR Hulk OR #Spiderman OR \"Thor Love and Thunder\" stake:National",
+  "Marvel": "(Marvel OR (\"Iron\" -(atom* OR curtain OR metallurgy OR \"fist of steel\")) OR (\"Captain America\" (shield OR patriot)) OR Hulk OR #Spiderman OR \"Thor Love and Thunder\") stake:UN",
+
   "simple": "(a OR (b OR \"saper vadere\")) -y"
 }
